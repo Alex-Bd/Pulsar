@@ -1,9 +1,10 @@
 let express = require('express');
 let router = express.Router();
 let fs = require('fs');
+let fileUpload = require('express-fileupload');
 
 router.post('/:artist',function (req,res) {
-   let dir = "/home/Desktop/music/"
+   let dir = "/home/revan2345/Desktop/music/"
              +req.params.artist ;
 
     if (!fs.existsSync(dir)){
@@ -16,8 +17,8 @@ router.post('/:artist',function (req,res) {
 });
 
 router.post('/:artist/:album',function (req,res) {
-   let dir = "/home/Desktop/music/"
-             +req.params.artist+"\\"
+   let dir = "/home/revan2345/Desktop/music/"
+             +req.params.artist+"/"
              +req.params.album;
 
     if (!fs.existsSync(dir)){
@@ -30,7 +31,22 @@ router.post('/:artist/:album',function (req,res) {
 });
 
 router.post('/:artist/:album/:song',function (req,res) {
-   let dir = "/home/Desktop/music/"
+  if (Object.keys(req.files).length == 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+   let song = req.files.song;
+song.mv('/home/revan2345/Desktop/music/'+req.params.artist+"/"+
+					 req.params.album+"/"+
+					 song.name
+, function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  });
+
+/*
+   let dir = "/home/revan2345/Desktop/music/"
              +req.params.artist+"/"
              +req.params.album+"/"
              +req.params.song;
@@ -42,7 +58,7 @@ router.post('/:artist/:album/:song',function (req,res) {
     }else {
         res.status(409);
         res.send("Already exists");
-    }
+    }*/
 });
 
 
