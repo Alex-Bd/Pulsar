@@ -3,7 +3,7 @@ let router = express.Router();
 let fs = require('fs');
 
 router.post('/:artist',function (req,res) {
-   let dir = "C:\\Sync\\db\\public\\Music\\"
+   let dir = "/home/Desktop/music/"
              +req.params.artist ;
 
     if (!fs.existsSync(dir)){
@@ -16,7 +16,7 @@ router.post('/:artist',function (req,res) {
 });
 
 router.post('/:artist/:album',function (req,res) {
-   let dir = "C:\\Sync\\db\\public\\Music\\"
+   let dir = "/home/Desktop/music/"
              +req.params.artist+"\\"
              +req.params.album;
 
@@ -30,9 +30,9 @@ router.post('/:artist/:album',function (req,res) {
 });
 
 router.post('/:artist/:album/:song',function (req,res) {
-   let dir = "C:\\Sync\\db\\public\\Music\\"
-             +req.params.artist+"\\"
-             +req.params.album+"\\"
+   let dir = "/home/Desktop/music/"
+             +req.params.artist+"/"
+             +req.params.album+"/"
              +req.params.song;
 
     if (!fs.existsSync(dir)){
